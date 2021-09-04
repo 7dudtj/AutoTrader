@@ -143,7 +143,7 @@ while True:
                         tickers[ticker][2] = True
                         now = datetime.datetime.now() + datetime.timedelta(hours=9)
                         current_ticker = ticker
-                        post_message(myToken, "#coin", "Buy "+current_ticker+": "+str(int(krw*0.9995))+"won")
+                        post_message(myToken, "#coin", "Buy "+current_ticker+": "+str(int(krw*0.9995))+"won\n"+str(now))
                         post_message(myToken, "#coin", "Buy price: "+str(buy_price))
                         time.sleep(0.2)
                 # my coin rises 5% already: sell coin
@@ -153,7 +153,7 @@ while True:
                     upbit.sell_market_order(ticker, coin) # sell: market order
                     buy = False
                     now = datetime.datetime.now() + datetime.timedelta(hours=9)
-                    post_message(myToken, "#coin", "Sell "+str(coin)+" "+current_ticker)
+                    post_message(myToken, "#coin", "Sell "+str(coin)+" "+current_ticker+"\n"+str(now))
                     post_message(myToken, "#coin", "Sell price: "+str(sell_price))
                     krw = get_balance("KRW")
                     post_message(myToken, "#coin", "Current money: "+str(int(krw))+"won")
@@ -173,7 +173,7 @@ while True:
                 upbit.sell_market_order(ticker, coin) # sell: market order
                 buy = False
                 now = datetime.datetime.now() + datetime.timedelta(hours=9)
-                post_message(myToken, "#coin", "Sell "+str(coin)+" "+current_ticker)
+                post_message(myToken, "#coin", "Sell "+str(coin)+" "+current_ticker+"\n"+str(now))
                 post_message(myToken, "#coin", "Sell price: "+str(sell_price))
                 krw = get_balance("KRW")
                 post_message(myToken, "#coin", "Current money: " + str(int(krw)) + "won")
