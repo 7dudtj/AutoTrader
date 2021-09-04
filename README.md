@@ -5,7 +5,7 @@ Ubuntu 서버 명령어
 
 백그라운드 실행:
 
-nohup python3 cat_v.1.0.1.py > output.log &
+nohup python3 cat_v.1.0.2.py > output.log &
 
 nohup python3 test.py > output.log &
 
