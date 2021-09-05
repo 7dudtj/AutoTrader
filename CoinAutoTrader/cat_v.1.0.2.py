@@ -1,15 +1,12 @@
 """
     'Coin Auto Trader' by Youngseo Yoo (github.com/7dudtj)
-
     Warning!
     This program does not guarantee you to earn money.
     You can lose all of your money by various reasons, including program errors.
     Responsibility of investment is all up to you, and
     responsibility of using this program is all up to you. too.
-
     This program is made based on Larry Williams' volatility breakthrough strategy.
     I highly recommend you to change this program code by your own trading algorithms and use it.
-
     This program is made to use 'Upbit' api.
 """
 
@@ -170,7 +167,7 @@ while True:
             if buy is True:
                 sell_price = get_current_price(current_ticker)
                 coin = get_balance(current_ticker[4:])
-                upbit.sell_market_order(ticker, coin) # sell: market order
+                upbit.sell_market_order(current_ticker, coin) # sell: market order
                 buy = False
                 now = datetime.datetime.now() + datetime.timedelta(hours=9)
                 post_message(myToken, "#coin", "Sell "+str(coin)+" "+current_ticker+"\n"+str(now))
