@@ -147,7 +147,7 @@ while True:
                 if buy is True and ticker == current_ticker and current_price >= buy_price * 1.05:
                     sell_price = current_price
                     coin = get_balance(current_ticker[4:])
-                    upbit.sell_market_order(ticker, coin) # sell: market order
+                    upbit.sell_market_order(current_ticker, coin) # sell: market order
                     buy = False
                     now = datetime.datetime.now() + datetime.timedelta(hours=9)
                     post_message(myToken, "#coin", "Sell "+str(coin)+" "+current_ticker+"\n"+str(now))
