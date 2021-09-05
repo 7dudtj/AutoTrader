@@ -7,7 +7,7 @@ Auto Trading Program
 
 백그라운드 실행:
  
-nohup python3 cat_v.1.0.2.py > output.log &
+nohup python3 cat_v.1.0.4.py > output.log &
  
 nohup python3 test.py > output.log &
  
