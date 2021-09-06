@@ -98,7 +98,7 @@ money = get_balance("KRW")
 buy_price = 0
 sell_price = 0
 time.sleep(0.2)
-post_message(myToken, "#coin", "Start CAT!\n"+str(now))
+post_message(myToken, "#coin", "Start CAT_v.1.0.5!\n"+str(now))
 post_message(myToken, "#coin", "Currrent money: "+str(int(money))+"won")
 
 
