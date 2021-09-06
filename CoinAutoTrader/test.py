@@ -1,16 +1,14 @@
 """
     'Coin Auto Trader' by Youngseo Yoo (github.com/7dudtj)
-
     Warning!
     This program does not guarantee you to earn money.
     You can lose all of your money by various reasons, including program errors.
     Responsibility of investment is all up to you, and
     responsibility of using this program is all up to you. too.
-
     This program is made based on Larry Williams' volatility breakthrough strategy.
     I highly recommend you to change this program code by your own trading algorithms and use it.
-
     This program is made to use 'Upbit' api.
+    This version is not recommended. Use v.1.0.
 """
 
 
@@ -86,7 +84,7 @@ def post_message(token, channel, text):
 # target_price >= ma5 ? target = target_price : ma5
 # choose tickers you want to trade
 # ex) tickers = {'KRW-BTC': [0, False, False]}
-tickers = {'KRW-BTC': [0, False, False]}
+tickers = {}
 
 
 # set needed variables and start program
@@ -94,6 +92,7 @@ now = datetime.datetime.now() + datetime.timedelta(hours=9) # change hours by yo
 upbit = pyupbit.Upbit(access, secret)
 k = 0.7 # low k: high risk, high return
 current_ticker = ""
+current_open = 0
 buy = False
 start_time = get_start_time()
 end_time = start_time + datetime.timedelta(days=1)
@@ -101,8 +100,8 @@ money = get_balance("KRW")
 buy_price = 0
 sell_price = 0
 time.sleep(0.2)
-post_message(myToken, "#coin", "Start CAT!\n"+str(now))
-post_message(myToken, "#coin", "Currrent money: "+str(money)+"won")
+post_message(myToken, "#coin", "Start CAT_v.1.0.5!\n"+str(now))
+post_message(myToken, "#coin", "Currrent money: "+str(int(money))+"won")
 
 
 # set tickers information
@@ -143,22 +142,30 @@ while True:
                         tickers[ticker][2] = True
                         now = datetime.datetime.now() + datetime.timedelta(hours=9)
                         current_ticker = ticker
-                        post_message(myToken, "#coin", "Buy "+current_ticker+": "+str(int(krw*0.9995))+"won")
+                        df = pyupbit.get_ohlcv(current_ticker, interval="day", count=1)
+                        current_open = df.iloc[0]['open']
+                        post_message(myToken, "#coin", "Buy "+current_ticker+": "+str(int(krw*0.9995))+"won\n"+str(now))
                         post_message(myToken, "#coin", "Buy price: "+str(buy_price))
-                        time.sleep(0.2)
+                        time.sleep(0.3)
                 # my coin rises 5% already: sell coin
-                if buy is True and ticker == current_ticker and current_price >= buy_price * 1.05:
+                # or
+                # current price goes below open price: emergency sell
+                if buy is True and ticker == current_ticker and \
+                        (current_price >= buy_price * 1.05 or current_price < current_open):
                     sell_price = current_price
                     coin = get_balance(current_ticker[4:])
-                    upbit.sell_market_order(ticker, coin) # sell: market order
+                    upbit.sell_market_order(current_ticker, coin) # sell: market order
                     buy = False
                     now = datetime.datetime.now() + datetime.timedelta(hours=9)
-                    post_message(myToken, "#coin", "Sell "+str(coin)+" "+current_ticker)
+                    if current_price < current_open:
+                        post_message(myToken, "#coin", "Safety net operation. Emergency sell!")
+                    post_message(myToken, "#coin", "Sell "+str(coin)+" "+current_ticker+"\n"+str(now))
                     post_message(myToken, "#coin", "Sell price: "+str(sell_price))
                     krw = get_balance("KRW")
                     post_message(myToken, "#coin", "Current money: "+str(int(krw))+"won")
                     # reset data
                     current_ticker = ""
+                    current_open = 0
                     buy_price = 0
                     sell_price = 0
                     time.sleep(0.2)
@@ -170,15 +177,16 @@ while True:
             if buy is True:
                 sell_price = get_current_price(current_ticker)
                 coin = get_balance(current_ticker[4:])
-                upbit.sell_market_order(ticker, coin) # sell: market order
+                upbit.sell_market_order(current_ticker, coin) # sell: market order
                 buy = False
                 now = datetime.datetime.now() + datetime.timedelta(hours=9)
-                post_message(myToken, "#coin", "Sell "+str(coin)+" "+current_ticker)
+                post_message(myToken, "#coin", "Sell "+str(coin)+" "+current_ticker+"\n"+str(now))
                 post_message(myToken, "#coin", "Sell price: "+str(sell_price))
                 krw = get_balance("KRW")
                 post_message(myToken, "#coin", "Current money: " + str(int(krw)) + "won")
                 # reset data
                 current_ticker = ""
+                current_open = 0
                 buy_price = 0
                 sell_price = 0
                 time.sleep(0.3)
