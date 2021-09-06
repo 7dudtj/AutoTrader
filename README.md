@@ -5,7 +5,7 @@ Auto Trading Program
 
 ### Ubuntu 서버 명령어
 
-####<백그라운드 실행>
+#### <백그라운드 실행>
  
 ver 1.0.5: nohup python3 cat_v.1.0.5.py > output.log &
 
@@ -14,12 +14,12 @@ ver 1.1.0: nohup python3 cat_v.1.1.0.py > output.log &
 test code: nohup python3 test.py > output.log &
 
  
-####<실행되고 있는지 확인> 
+#### <실행되고 있는지 확인> 
 
 ps ax | grep .py
  
 
-####<프로세스 종료>(PID는 ps ax | grep .py를 했을때 확인 가능)
+#### <프로세스 종료>(PID는 ps ax | grep .py를 했을때 확인 가능)
 
 kill -9 PID
 
