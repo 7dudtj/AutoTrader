@@ -10,6 +10,8 @@ Auto Trading Program
 ver 1.0.5: nohup python3 cat_v.1.0.5.py > output.log &
 
 ver 1.1.0: nohup python3 cat_v.1.1.0.py > output.log &
+
+ver 1.2.0: nohup python3 cat_v.1.1.0.py > output.log &
  
 test code: nohup python3 test.py > output.log &
 
