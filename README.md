@@ -6,12 +6,10 @@ Auto Trading Program
 ### Ubuntu 서버 명령어
 
 #### <백그라운드 실행>
- 
-ver 1.0.5: nohup python3 cat_v.1.0.5.py > output.log &
-
-ver 1.1.0: nohup python3 cat_v.1.1.0.py > output.log &
 
 ver 1.2.0: nohup python3 cat_v.1.2.0.py > output.log &
+
+ver 1.3.0: nohup python3 cat_v.1.3.0.py > output.log &
  
 test code: nohup python3 test.py > output.log &
 
