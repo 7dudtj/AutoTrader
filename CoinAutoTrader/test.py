@@ -8,7 +8,7 @@
     This program is made based on Larry Williams' volatility breakthrough strategy.
     I highly recommend you to change this program code by your own trading algorithms and use it.
     This program is made to use 'Upbit' api.
-    This version is not recommended. Use v.1.0.
+    This version is not recommended. Use v.1.1.
 """
 
 
@@ -89,18 +89,20 @@ tickers = {}
 
 # set needed variables and start program
 now = datetime.datetime.now() + datetime.timedelta(hours=9) # change hours by your server time
+buy_time = now
 upbit = pyupbit.Upbit(access, secret)
 k = 0.7 # low k: high risk, high return
 current_ticker = ""
 current_open = 0
 buy = False
+today_buy = True
 start_time = get_start_time()
 end_time = start_time + datetime.timedelta(days=1)
 money = get_balance("KRW")
 buy_price = 0
 sell_price = 0
 time.sleep(0.2)
-post_message(myToken, "#coin", "Start CAT_v.1.0.5!\n"+str(now))
+post_message(myToken, "#coin", "Start CAT_test!\n"+str(now))
 post_message(myToken, "#coin", "Currrent money: "+str(int(money))+"won")
 
 
@@ -133,14 +135,16 @@ while True:
                     # check: attain
                     tickers[ticker][1] = True
                     # buy: false & not dangerous & after 09:05:00 >> do buy
-                    if buy is False and tickers[ticker][2] is False \
+                    if buy is False and today_buy is True and tickers[ticker][2] is False \
                             and now >= start_time + datetime.timedelta(minutes=5):
+                        post_message(myToken, "#coin", "#today_buy: " + str(today_buy))  # for test
                         krw = get_balance("KRW")
                         buy_price = current_price
                         upbit.buy_market_order(ticker, krw*0.9995) # buy: market order
                         buy = True
                         tickers[ticker][2] = True
                         now = datetime.datetime.now() + datetime.timedelta(hours=9)
+                        buy_time = now
                         current_ticker = ticker
                         df = pyupbit.get_ohlcv(current_ticker, interval="day", count=1)
                         current_open = df.iloc[0]['open']
@@ -158,11 +162,35 @@ while True:
                     buy = False
                     now = datetime.datetime.now() + datetime.timedelta(hours=9)
                     if current_price < current_open:
-                        post_message(myToken, "#coin", "Safety net operation. Emergency sell!")
+                        post_message(myToken, "#coin", "Safety net operation. Emergency sell!\n"
+                                                       "Stop today's trading.")
+                        today_buy = False
+                        post_message(myToken, "#coin", "#today_buy: "+str(today_buy)) # for test
+                    else:
+                        post_message(myToken, "#coin", "Get 5%!")
                     post_message(myToken, "#coin", "Sell "+str(coin)+" "+current_ticker+"\n"+str(now))
                     post_message(myToken, "#coin", "Sell price: "+str(sell_price))
                     krw = get_balance("KRW")
                     post_message(myToken, "#coin", "Current money: "+str(int(krw))+"won")
+                    # reset data
+                    current_ticker = ""
+                    current_open = 0
+                    buy_price = 0
+                    sell_price = 0
+                    time.sleep(0.2)
+                # do not rise in 30 minutes: try to sell at 1% margin
+                if buy is True and ticker == current_ticker and \
+                        now > buy_time + datetime.timedelta(minutes=30) and current_price >= buy_price * 1.01:
+                    sell_price = current_price
+                    coin = get_balance(current_ticker[4:])
+                    upbit.sell_market_order(current_ticker, coin)  # sell: market order
+                    buy = False
+                    now = datetime.datetime.now() + datetime.timedelta(hours=9)
+                    post_message(myToken, "#coin", "Get 1%!")
+                    post_message(myToken, "#coin", "Sell " + str(coin) + " " + current_ticker + "\n" + str(now))
+                    post_message(myToken, "#coin", "Sell price: " + str(sell_price))
+                    krw = get_balance("KRW")
+                    post_message(myToken, "#coin", "Current money: " + str(int(krw)) + "won")
                     # reset data
                     current_ticker = ""
                     current_open = 0
@@ -191,6 +219,8 @@ while True:
                 sell_price = 0
                 time.sleep(0.3)
             # after 09:00:00 >> time change
+            today_buy = True
+            post_message(myToken, "#coin", "#today_buy: "+str(today_buy)) # for test
             start_time = get_start_time()
             time.sleep(0.1)
             end_time = start_time + datetime.timedelta(days=1)
