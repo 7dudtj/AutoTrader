@@ -23,6 +23,12 @@ ps ax | grep .py
 
 kill -9 PID
 
+#### <서버 업그레이드>
+
+리스트 업데이트: apt-get update 
+
+업그레이드: sudo apt-get upgrade
+
 ## License
 
 <img align="right" src="http://opensource.org/trademarks/opensource/OSI-Approved-License-100x137.png">
