@@ -3,7 +3,7 @@ Auto Trading Program
 
 ## CoinAutoTrader
 'Coin Auto Trader' by Youngseo Yoo (github.com/7dudtj)  
-###Warning!  
+### Warning!  
 This program does not guarantee you to earn money.  
 You can lose all of your money by various reasons, including program errors.  
 Responsibility of investment is all up to you, and  
