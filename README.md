@@ -2,6 +2,18 @@
 Auto Trading Program
 
 ## CoinAutoTrader
+"""
+    'Coin Auto Trader' by Youngseo Yoo (github.com/7dudtj)
+    Warning!
+    This program does not guarantee you to earn money.
+    You can lose all of your money by various reasons, including program errors.
+    Responsibility of investment is all up to you, and
+    responsibility of using this program is all up to you. too.
+    This program is made based on Larry Williams' volatility breakthrough strategy.
+    I highly recommend you to change this program code by your own trading algorithms and use it.
+    This program is made to use 'Upbit' api.
+    This program is not developed yet. I do not recommend using any version of the program.
+"""
 
 ### Ubuntu 서버 명령어
 
