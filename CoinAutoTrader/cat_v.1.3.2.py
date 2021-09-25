@@ -8,7 +8,7 @@
     This program is made based on Larry Williams' volatility breakthrough strategy.
     I highly recommend you to change this program code by your own trading algorithms and use it.
     This program is made to use 'Upbit' api.
-    This version is not recommended. Use v.1.1.
+    This version is not recommended. Use v.1.2.
 """
 
 
@@ -102,7 +102,7 @@ money = get_balance("KRW")
 buy_price = 0
 sell_price = 0
 time.sleep(0.2)
-post_message(myToken, "#coin", "Start CAT_v.1.3.1!\n"+str(now))
+post_message(myToken, "#coin", "Start CAT_v.1.3.2!\n"+str(now))
 post_message(myToken, "#coin", "Currrent money: "+str(int(money))+"won")
 
 
