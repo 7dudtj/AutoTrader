@@ -102,7 +102,7 @@ money = get_balance("KRW")
 buy_price = 0
 sell_price = 0
 time.sleep(0.2)
-post_message(myToken, "#coin", "Start CAT_v.1.3.3!\n"+str(now))
+post_message(myToken, "#coin", "Start CAT_v.1.3.4!\n"+str(now))
 post_message(myToken, "#coin", "Currrent money: "+str(int(money))+"won")
 
 
@@ -134,7 +134,7 @@ while True:
                 if tickers[ticker][0] <= current_price and tickers[ticker][1] is False:
                     # check: attain
                     tickers[ticker][1] = True
-                    # buy: false & not dangerous & after 09:05:00 >> do buy
+                    # buy: false & not dangerous & after 09:10:00 >> do buy
                     if buy is False and today_buy is True and tickers[ticker][2] is False \
                             and now >= start_time + datetime.timedelta(minutes=10):
                         krw = get_balance("KRW")
