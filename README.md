@@ -19,7 +19,7 @@ This program is not developed yet. I do not recommend using any version of the p
 
 ver 1.2.0: nohup python3 cat_v.1.2.0.py > output.log &
 
-ver 1.3.3: nohup python3 cat_v.1.3.3.py > output.log &
+ver 1.3.4: nohup python3 cat_v.1.3.4.py > output.log &
  
 test code: nohup python3 test.py > output.log &
 
