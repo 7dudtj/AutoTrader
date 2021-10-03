@@ -17,6 +17,7 @@ import time
 import pyupbit
 import datetime
 import requests
+import atexit
 
 
 # set keys
@@ -38,6 +39,7 @@ def set_tickers(ticker, k):
         target = target_price
     else:
         target = ma5
+        danger = True # target_price < ma5: danger
 
     # find dangerous situation
     range = 0.1
@@ -76,6 +78,11 @@ def post_message(token, channel, text):
                              )
     print(response)
 
+# send message when program stops
+def exit_function():
+    now = datetime.datetime.now() + datetime.timedelta(hours=9)
+    post_message(myToken, "#coin", "CAT stops!\n"+str(now))
+
 # buy & sell >> 8/s
 # ----------------------------------------------------------------------------------------
 
@@ -104,7 +111,7 @@ sell_price = 0
 time.sleep(0.2)
 post_message(myToken, "#coin", "Start CAT_test!\n"+str(now))
 post_message(myToken, "#coin", "Currrent money: "+str(int(money))+"won")
-
+atexit.register(exit_function)
 
 # set tickers information
 try:
