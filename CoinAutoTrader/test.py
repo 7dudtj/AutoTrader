@@ -41,7 +41,7 @@ def set_tickers(ticker, k):
 
     # find dangerous situation
     range = 0.1
-    if df.iloc[-2]['high'] * range <= (df.iloc[-2]['high'] - df.iloc[-2]['low']):
+    if df.iloc[-2]['low'] * range <= (df.iloc[-2]['high'] - df.iloc[-2]['low']):
         danger = True
 
     # return [target, attain(False), danger]
@@ -91,7 +91,7 @@ tickers = {}
 now = datetime.datetime.now() + datetime.timedelta(hours=9) # change hours by your server time
 buy_time = now
 upbit = pyupbit.Upbit(access, secret)
-k = 0.7 # low k: high risk, high return
+k = 0.5 # low k: high risk, high return
 current_ticker = ""
 current_open = 0
 buy = False
@@ -134,9 +134,9 @@ while True:
                 if tickers[ticker][0] <= current_price and tickers[ticker][1] is False:
                     # check: attain
                     tickers[ticker][1] = True
-                    # buy: false & not dangerous & after 09:05:00 >> do buy
+                    # buy: false & not dangerous & after 09:10:00 >> do buy
                     if buy is False and today_buy is True and tickers[ticker][2] is False \
-                            and now >= start_time + datetime.timedelta(minutes=5):
+                            and now >= start_time + datetime.timedelta(minutes=10):
                         post_message(myToken, "#coin", "#today_buy: " + str(today_buy))  # for test
                         krw = get_balance("KRW")
                         buy_price = current_price
