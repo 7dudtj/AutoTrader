@@ -8,7 +8,7 @@
     This program is made based on Larry Williams' volatility breakthrough strategy.
     I highly recommend you to change this program code by your own trading algorithms and use it.
     This program is made to use 'Upbit' api.
-    This version is not recommended. Use v.1.1.
+    This version is not recommended. Use v.1.2.
 """
 
 
@@ -218,8 +218,9 @@ while True:
                 buy_price = 0
                 sell_price = 0
                 time.sleep(0.3)
+            if today_buy is False:
+                today_buy = True
             # after 09:00:00 >> time change
-            today_buy = True
             post_message(myToken, "#coin", "#today_buy: "+str(today_buy)) # for test
             start_time = get_start_time()
             time.sleep(0.1)
