@@ -17,6 +17,7 @@ import time
 import pyupbit
 import datetime
 import requests
+import atexit
 
 
 # set keys
@@ -38,6 +39,7 @@ def set_tickers(ticker, k):
         target = target_price
     else:
         target = ma5
+        danger = True # target_price < ma5: danger
 
     # find dangerous situation
     range = 0.1
@@ -76,6 +78,11 @@ def post_message(token, channel, text):
                              )
     print(response)
 
+# send message when program stops
+def exit_function():
+    now = datetime.datetime.now() + datetime.timedelta(hours=9)
+    post_message(myToken, "#coin", "CAT stops!\n"+str(now))
+
 # buy & sell >> 8/s
 # ----------------------------------------------------------------------------------------
 
@@ -96,15 +103,16 @@ current_ticker = ""
 current_open = 0
 buy = False
 today_buy = True
+today_start = False
 start_time = get_start_time()
 end_time = start_time + datetime.timedelta(days=1)
 money = get_balance("KRW")
 buy_price = 0
 sell_price = 0
 time.sleep(0.2)
-post_message(myToken, "#coin", "Start CAT_v.1.3.4!\n"+str(now))
+post_message(myToken, "#coin", "Start CAT_v.1.3.5!\n"+str(now))
 post_message(myToken, "#coin", "Currrent money: "+str(int(money))+"won")
-
+atexit.register(exit_function)
 
 # set tickers information
 try:
@@ -117,7 +125,6 @@ try:
 except Exception as e:
     post_message(myToken, "#coin", "Error: "+str(e))
 post_message(myToken, "#coin", "Get tickers information successfully!")
-# post_message(myToken, "#coin", "Change tickers information!\n"+str(tickers)+"\n"+str(now))
 
 # main process
 while True:
@@ -126,6 +133,11 @@ while True:
         now = datetime.datetime.now() + datetime.timedelta(hours=9)
         # 09:00:00 ~ 08:59:00: main loop
         if start_time < now <= end_time - datetime.timedelta(minutes=1):
+            # start new day
+            if today_start is True:
+                post_message(myToken, "#coin", "Good morning! CAT start!\n"+str(now))
+                post_message(myToken, "#coin", "Today's trading? "+str(today_buy))
+                today_start = False
             # search tickers
             for ticker in tickers:
                 # get current price steadily
@@ -161,8 +173,7 @@ while True:
                     buy = False
                     now = datetime.datetime.now() + datetime.timedelta(hours=9)
                     if current_price < current_open:
-                        post_message(myToken, "#coin", "Safety net operation. Emergency sell!\n"
-                                                       "Stop today's trading.")
+                        post_message(myToken, "#coin", "Safety net operation. Emergency sell!\nStop today's trading.")
                         today_buy = False
                     else:
                         post_message(myToken, "#coin", "Get 5%!")
@@ -216,15 +227,16 @@ while True:
                 buy_price = 0
                 sell_price = 0
                 time.sleep(0.3)
+            if today_buy is False:
+                today_buy = True
             # after 09:00:00 >> time change
-            today_buy = True
             start_time = get_start_time()
+            Today_start = True
             time.sleep(0.1)
             end_time = start_time + datetime.timedelta(days=1)
             for ticker in tickers:
                 tickers[ticker][0], tickers[ticker][1], tickers[ticker][2] = set_tickers(ticker, k)
                 time.sleep(0.1)
-            # post_message(myToken, "#coin", "Change tickers information!\n"+str(tickers)+"\n"+str(now))
     except Exception as e:
         post_message(myToken, "#coin", "Error: "+str(e))
         time.sleep(1)
