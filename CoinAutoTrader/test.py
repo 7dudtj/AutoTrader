@@ -103,6 +103,7 @@ current_ticker = ""
 current_open = 0
 buy = False
 today_buy = True
+today_start = False
 start_time = get_start_time()
 end_time = start_time + datetime.timedelta(days=1)
 money = get_balance("KRW")
@@ -124,7 +125,6 @@ try:
 except Exception as e:
     post_message(myToken, "#coin", "Error: "+str(e))
 post_message(myToken, "#coin", "Get tickers information successfully!")
-# post_message(myToken, "#coin", "Change tickers information!\n"+str(tickers)+"\n"+str(now))
 
 # main process
 while True:
@@ -133,6 +133,11 @@ while True:
         now = datetime.datetime.now() + datetime.timedelta(hours=9)
         # 09:00:00 ~ 08:59:00: main loop
         if start_time < now <= end_time - datetime.timedelta(minutes=1):
+            # start new day
+            if today_start is True:
+                post_message(myToken, "#coin", "Good morning! CAT start!\n"+str(now))
+                post_message(myToken, "#coin", "Today's trading? "+str(today_buy))
+                today_start = False
             # search tickers
             for ticker in tickers:
                 # get current price steadily
@@ -144,7 +149,6 @@ while True:
                     # buy: false & not dangerous & after 09:10:00 >> do buy
                     if buy is False and today_buy is True and tickers[ticker][2] is False \
                             and now >= start_time + datetime.timedelta(minutes=10):
-                        post_message(myToken, "#coin", "#today_buy: " + str(today_buy))  # for test
                         krw = get_balance("KRW")
                         buy_price = current_price
                         upbit.buy_market_order(ticker, krw*0.9995) # buy: market order
@@ -157,6 +161,8 @@ while True:
                         current_open = df.iloc[0]['open']
                         post_message(myToken, "#coin", "Buy "+current_ticker+": "+str(int(krw*0.9995))+"won\n"+str(now))
                         post_message(myToken, "#coin", "Buy price: "+str(buy_price))
+                        print("Buy "+current_ticker+": "+str(int(krw*0.9995))+"won\n"+str(now)) # for test
+                        print("Buy price: "+str(buy_price)) # for test
                         time.sleep(0.3)
                 # my coin rises 5% already: sell coin
                 # or
@@ -169,16 +175,19 @@ while True:
                     buy = False
                     now = datetime.datetime.now() + datetime.timedelta(hours=9)
                     if current_price < current_open:
-                        post_message(myToken, "#coin", "Safety net operation. Emergency sell!\n"
-                                                       "Stop today's trading.")
+                        post_message(myToken, "#coin", "Safety net operation. Emergency sell!\nStop today's trading.")
+                        print("Safety net operation. Emergency sell!\nStop today's trading.") # for test
                         today_buy = False
-                        post_message(myToken, "#coin", "#today_buy: "+str(today_buy)) # for test
                     else:
                         post_message(myToken, "#coin", "Get 5%!")
+                        print("Get 5%!") # for test
                     post_message(myToken, "#coin", "Sell "+str(coin)+" "+current_ticker+"\n"+str(now))
                     post_message(myToken, "#coin", "Sell price: "+str(sell_price))
                     krw = get_balance("KRW")
                     post_message(myToken, "#coin", "Current money: "+str(int(krw))+"won")
+                    print("Sell "+str(coin)+" "+current_ticker+"\n"+str(now)) # for test
+                    print("Sell price: "+str(sell_price)) # for test
+                    print("Current money: "+str(int(krw))+"won") # for test
                     # reset data
                     current_ticker = ""
                     current_open = 0
@@ -198,6 +207,10 @@ while True:
                     post_message(myToken, "#coin", "Sell price: " + str(sell_price))
                     krw = get_balance("KRW")
                     post_message(myToken, "#coin", "Current money: " + str(int(krw)) + "won")
+                    print("Get 1%!") # for test
+                    print("Sell " + str(coin) + " " + current_ticker + "\n" + str(now)) # for test
+                    print("Sell price: " + str(sell_price)) # for test
+                    print("Current money: " + str(int(krw)) + "won") # for test
                     # reset data
                     current_ticker = ""
                     current_open = 0
@@ -219,6 +232,9 @@ while True:
                 post_message(myToken, "#coin", "Sell price: "+str(sell_price))
                 krw = get_balance("KRW")
                 post_message(myToken, "#coin", "Current money: " + str(int(krw)) + "won")
+                print("Sell "+str(coin)+" "+current_ticker+"\n"+str(now)) # for test
+                print("Sell price: "+str(sell_price))  # for test
+                print("Current money: " + str(int(krw)) + "won")  # for test
                 # reset data
                 current_ticker = ""
                 current_open = 0
@@ -228,14 +244,14 @@ while True:
             if today_buy is False:
                 today_buy = True
             # after 09:00:00 >> time change
-            post_message(myToken, "#coin", "#today_buy: "+str(today_buy)) # for test
             start_time = get_start_time()
+            Today_start = True
             time.sleep(0.1)
             end_time = start_time + datetime.timedelta(days=1)
             for ticker in tickers:
                 tickers[ticker][0], tickers[ticker][1], tickers[ticker][2] = set_tickers(ticker, k)
                 time.sleep(0.1)
-            # post_message(myToken, "#coin", "Change tickers information!\n"+str(tickers)+"\n"+str(now))
     except Exception as e:
         post_message(myToken, "#coin", "Error: "+str(e))
+        print("Error: "+str(e)) # for test
         time.sleep(1)
