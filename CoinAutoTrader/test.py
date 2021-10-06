@@ -8,7 +8,7 @@
     This program is made based on Larry Williams' volatility breakthrough strategy.
     I highly recommend you to change this program code by your own trading algorithms and use it.
     This program is made to use 'Upbit' api.
-    This version is not recommended. Use v.1.2.
+    This version is not recommended. Use v.1.3.
 """
 
 
@@ -88,7 +88,6 @@ def exit_function():
 
 
 # tickers = {ticker: [target, attain, danger]}
-# target_price >= ma5 ? target = target_price : ma5
 # choose tickers you want to trade
 # ex) tickers = {'KRW-BTC': [0, False, False]}
 tickers = {}
@@ -168,7 +167,7 @@ while True:
                 # or
                 # current price goes below open price: emergency sell
                 if buy is True and ticker == current_ticker and \
-                        (current_price >= buy_price * 1.05 or current_price < current_open):
+                        (current_price >= buy_price * 1.05 or current_price < current_open * 0.98):
                     sell_price = current_price
                     coin = get_balance(current_ticker[4:])
                     upbit.sell_market_order(current_ticker, coin) # sell: market order
