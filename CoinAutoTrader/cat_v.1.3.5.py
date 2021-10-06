@@ -8,7 +8,6 @@
     This program is made based on Larry Williams' volatility breakthrough strategy.
     I highly recommend you to change this program code by your own trading algorithms and use it.
     This program is made to use 'Upbit' api.
-    This version is not recommended. Use v.1.2.
 """
 
 
@@ -17,7 +16,6 @@ import time
 import pyupbit
 import datetime
 import requests
-import atexit
 
 
 # set keys
@@ -78,17 +76,11 @@ def post_message(token, channel, text):
                              )
     print(response)
 
-# send message when program stops
-def exit_function():
-    now = datetime.datetime.now() + datetime.timedelta(hours=9)
-    post_message(myToken, "#coin", "CAT stops!\n"+str(now))
-
 # buy & sell >> 8/s
 # ----------------------------------------------------------------------------------------
 
 
 # tickers = {ticker: [target, attain, danger]}
-# target_price >= ma5 ? target = target_price : ma5
 # choose tickers you want to trade
 # ex) tickers = {'KRW-BTC': [0, False, False]}
 tickers = {}
@@ -103,7 +95,6 @@ current_ticker = ""
 current_open = 0
 buy = False
 today_buy = True
-today_start = False
 start_time = get_start_time()
 end_time = start_time + datetime.timedelta(days=1)
 money = get_balance("KRW")
@@ -112,7 +103,6 @@ sell_price = 0
 time.sleep(0.2)
 post_message(myToken, "#coin", "Start CAT_v.1.3.5!\n"+str(now))
 post_message(myToken, "#coin", "Currrent money: "+str(int(money))+"won")
-atexit.register(exit_function)
 
 # set tickers information
 try:
@@ -133,11 +123,6 @@ while True:
         now = datetime.datetime.now() + datetime.timedelta(hours=9)
         # 09:00:00 ~ 08:59:00: main loop
         if start_time < now <= end_time - datetime.timedelta(minutes=1):
-            # start new day
-            if today_start is True:
-                post_message(myToken, "#coin", "Good morning! CAT start!\n"+str(now))
-                post_message(myToken, "#coin", "Today's trading? "+str(today_buy))
-                today_start = False
             # search tickers
             for ticker in tickers:
                 # get current price steadily
@@ -166,7 +151,7 @@ while True:
                 # or
                 # current price goes below open price: emergency sell
                 if buy is True and ticker == current_ticker and \
-                        (current_price >= buy_price * 1.05 or current_price < current_open):
+                        (current_price >= buy_price * 1.05 or current_price < current_open * 0.98):
                     sell_price = current_price
                     coin = get_balance(current_ticker[4:])
                     upbit.sell_market_order(current_ticker, coin) # sell: market order
@@ -231,7 +216,6 @@ while True:
                 today_buy = True
             # after 09:00:00 >> time change
             start_time = get_start_time()
-            Today_start = True
             time.sleep(0.1)
             end_time = start_time + datetime.timedelta(days=1)
             for ticker in tickers:
