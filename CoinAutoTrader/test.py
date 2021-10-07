@@ -244,7 +244,7 @@ while True:
                 today_buy = True
             # after 09:00:00 >> time change
             start_time = get_start_time()
-            Today_start = True
+            today_start = True
             time.sleep(0.1)
             end_time = start_time + datetime.timedelta(days=1)
             for ticker in tickers:
