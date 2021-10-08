@@ -81,7 +81,7 @@ def post_message(token, channel, text):
 # send message when program stops
 def exit_function():
     now = datetime.datetime.now() + datetime.timedelta(hours=9)
-    post_message(myToken, "#coin", "CAT stops!\n"+str(now))
+    post_message(myToken, "#coin", "CAT stops!\n"+str(now.replace(microsecond=0)))
 
 # buy & sell >> 8/s
 # ----------------------------------------------------------------------------------------
@@ -109,7 +109,7 @@ money = get_balance("KRW")
 buy_price = 0
 sell_price = 0
 time.sleep(0.2)
-post_message(myToken, "#coin", "Start CAT_test!\n"+str(now))
+post_message(myToken, "#coin", "Start CAT_test!\n"+str(now.replace(microsecond=0)))
 post_message(myToken, "#coin", "Currrent money: "+str(int(money))+"won")
 atexit.register(exit_function)
 
@@ -134,7 +134,7 @@ while True:
         if start_time < now <= end_time - datetime.timedelta(minutes=1):
             # start new day
             if today_start is True:
-                post_message(myToken, "#coin", "Good morning! CAT start!\n"+str(now))
+                post_message(myToken, "#coin", "Good morning! CAT start!\n"+str(now.replace(microsecond=0)))
                 post_message(myToken, "#coin", "Today's trading? "+str(today_buy))
                 today_start = False
             # search tickers
@@ -158,7 +158,7 @@ while True:
                         current_ticker = ticker
                         df = pyupbit.get_ohlcv(current_ticker, interval="day", count=1)
                         current_open = df.iloc[0]['open']
-                        post_message(myToken, "#coin", "Buy "+current_ticker+": "+str(int(krw*0.9995))+"won\n"+str(now))
+                        post_message(myToken, "#coin", "Buy "+current_ticker+": "+str(int(krw*0.9995))+"won\n"+str(now.replace(microsecond=0)))
                         post_message(myToken, "#coin", "Buy price: "+str(buy_price))
                         print("Buy "+current_ticker+": "+str(int(krw*0.9995))+"won\n"+str(now)) # for test
                         print("Buy price: "+str(buy_price)) # for test
@@ -180,7 +180,7 @@ while True:
                     else:
                         post_message(myToken, "#coin", "Get 5%!")
                         print("Get 5%!") # for test
-                    post_message(myToken, "#coin", "Sell "+str(coin)+" "+current_ticker+"\n"+str(now))
+                    post_message(myToken, "#coin", "Sell "+str(coin)+" "+current_ticker+"\n"+str(now.replace(microsecond=0)))
                     post_message(myToken, "#coin", "Sell price: "+str(sell_price))
                     krw = get_balance("KRW")
                     post_message(myToken, "#coin", "Current money: "+str(int(krw))+"won")
@@ -202,7 +202,7 @@ while True:
                     buy = False
                     now = datetime.datetime.now() + datetime.timedelta(hours=9)
                     post_message(myToken, "#coin", "Get 1%!")
-                    post_message(myToken, "#coin", "Sell " + str(coin) + " " + current_ticker + "\n" + str(now))
+                    post_message(myToken, "#coin", "Sell " + str(coin) + " " + current_ticker + "\n" + str(now.replace(microsecond=0)))
                     post_message(myToken, "#coin", "Sell price: " + str(sell_price))
                     krw = get_balance("KRW")
                     post_message(myToken, "#coin", "Current money: " + str(int(krw)) + "won")
@@ -227,7 +227,7 @@ while True:
                 upbit.sell_market_order(current_ticker, coin) # sell: market order
                 buy = False
                 now = datetime.datetime.now() + datetime.timedelta(hours=9)
-                post_message(myToken, "#coin", "Sell "+str(coin)+" "+current_ticker+"\n"+str(now))
+                post_message(myToken, "#coin", "Sell "+str(coin)+" "+current_ticker+"\n"+str(now.replace(microsecond=0)))
                 post_message(myToken, "#coin", "Sell price: "+str(sell_price))
                 krw = get_balance("KRW")
                 post_message(myToken, "#coin", "Current money: " + str(int(krw)) + "won")
