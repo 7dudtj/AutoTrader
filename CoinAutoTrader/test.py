@@ -17,7 +17,6 @@ import time
 import pyupbit
 import datetime
 import requests
-import atexit
 
 
 # set keys
@@ -78,11 +77,6 @@ def post_message(token, channel, text):
                              )
     print(response)
 
-# send message when program stops
-def exit_function():
-    now = datetime.datetime.now() + datetime.timedelta(hours=9)
-    post_message(myToken, "#coin", "CAT stops!\n"+str(now.replace(microsecond=0)))
-
 # buy & sell >> 8/s
 # ----------------------------------------------------------------------------------------
 
@@ -111,7 +105,6 @@ sell_price = 0
 time.sleep(0.2)
 post_message(myToken, "#coin", "Start CAT_test!\n"+str(now.replace(microsecond=0)))
 post_message(myToken, "#coin", "Currrent money: "+str(int(money))+"won")
-atexit.register(exit_function)
 
 # set tickers information
 try:
@@ -160,8 +153,6 @@ while True:
                         current_open = df.iloc[0]['open']
                         post_message(myToken, "#coin", "Buy "+current_ticker+": "+str(int(krw*0.9995))+"won\n"+str(now.replace(microsecond=0)))
                         post_message(myToken, "#coin", "Buy price: "+str(buy_price))
-                        print("Buy "+current_ticker+": "+str(int(krw*0.9995))+"won\n"+str(now)) # for test
-                        print("Buy price: "+str(buy_price)) # for test
                         time.sleep(0.3)
                 # my coin rises 5% already: sell coin
                 # or
@@ -175,18 +166,13 @@ while True:
                     now = datetime.datetime.now() + datetime.timedelta(hours=9)
                     if current_price < current_open:
                         post_message(myToken, "#coin", "Safety net operation. Emergency sell!\nStop today's trading.")
-                        print("Safety net operation. Emergency sell!\nStop today's trading.") # for test
                         today_buy = False
                     else:
                         post_message(myToken, "#coin", "Get 5%!")
-                        print("Get 5%!") # for test
                     post_message(myToken, "#coin", "Sell "+str(coin)+" "+current_ticker+"\n"+str(now.replace(microsecond=0)))
                     post_message(myToken, "#coin", "Sell price: "+str(sell_price))
                     krw = get_balance("KRW")
                     post_message(myToken, "#coin", "Current money: "+str(int(krw))+"won")
-                    print("Sell "+str(coin)+" "+current_ticker+"\n"+str(now)) # for test
-                    print("Sell price: "+str(sell_price)) # for test
-                    print("Current money: "+str(int(krw))+"won") # for test
                     # reset data
                     current_ticker = ""
                     current_open = 0
@@ -206,10 +192,6 @@ while True:
                     post_message(myToken, "#coin", "Sell price: " + str(sell_price))
                     krw = get_balance("KRW")
                     post_message(myToken, "#coin", "Current money: " + str(int(krw)) + "won")
-                    print("Get 1%!") # for test
-                    print("Sell " + str(coin) + " " + current_ticker + "\n" + str(now)) # for test
-                    print("Sell price: " + str(sell_price)) # for test
-                    print("Current money: " + str(int(krw)) + "won") # for test
                     # reset data
                     current_ticker = ""
                     current_open = 0
@@ -231,9 +213,6 @@ while True:
                 post_message(myToken, "#coin", "Sell price: "+str(sell_price))
                 krw = get_balance("KRW")
                 post_message(myToken, "#coin", "Current money: " + str(int(krw)) + "won")
-                print("Sell "+str(coin)+" "+current_ticker+"\n"+str(now)) # for test
-                print("Sell price: "+str(sell_price))  # for test
-                print("Current money: " + str(int(krw)) + "won")  # for test
                 # reset data
                 current_ticker = ""
                 current_open = 0
@@ -252,5 +231,4 @@ while True:
                 time.sleep(0.1)
     except Exception as e:
         post_message(myToken, "#coin", "Error: "+str(e))
-        print("Error: "+str(e)) # for test
         time.sleep(1)
