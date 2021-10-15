@@ -19,7 +19,7 @@ This program is not developed yet. But if you want to use, then I recommend ver 
 
 ver 1.3.5: nohup python3 cat_v.1.3.5.py > output.log &
 
-ver 1.4.0: nohup python3 cat_v.1.4.0.py > output.log &
+ver 1.4.1: nohup python3 cat_v.1.4.1.py > output.log &
  
 test code: nohup python3 test.py > output.log &
 
