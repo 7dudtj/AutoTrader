@@ -103,7 +103,7 @@ money = get_balance("KRW")
 buy_price = 0
 sell_price = 0
 time.sleep(0.2)
-post_message(myToken, "#coin", "Start CAT_ver.1.4.2!\n"+str(now.replace(microsecond=0)))
+post_message(myToken, "#coin", "Start CAT_ver.1.4.3!\n"+str(now.replace(microsecond=0)))
 post_message(myToken, "#coin", "Account balance: "+str(int(money))+"won")
 
 # set tickers information
@@ -167,7 +167,7 @@ while True:
                     upbit.sell_market_order(current_ticker, coin) # sell: market order
                     buy = False
                     now = datetime.datetime.now() + datetime.timedelta(hours=9)
-                    if current_price < current_open:
+                    if current_price < current_open * 0.98:
                         post_message(myToken, "#coin", "Safety net operation. Emergency sell!\nStop today's trading.")
                         today_buy = False
                     else:
@@ -208,8 +208,9 @@ while True:
                     coin = get_balance(current_ticker[4:])
                     upbit.sell_market_order(current_ticker, coin)  # sell: market order
                     buy = False
+                    today_buy = False
                     now = datetime.datetime.now() + datetime.timedelta(hours=9)
-                    post_message(myToken, "#coin", "Get 0%!")
+                    post_message(myToken, "#coin", "Get 0%!\nStop today's trading.")
                     post_message(myToken, "#coin",
                                  "Sell " + str(coin) + " " + current_ticker + "\n" + str(now.replace(microsecond=0)))
                     post_message(myToken, "#coin", "Sell price: " + str(sell_price))
