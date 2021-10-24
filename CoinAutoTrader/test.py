@@ -8,7 +8,7 @@
     This program is made based on Larry Williams' volatility breakthrough strategy.
     I highly recommend you to change this program code by your own trading algorithms and use it.
     This program is made to use 'Upbit' api.
-    This version is not recommended. Use v.1.3.
+    This version is not recommended. Use v.1.4.
 """
 
 
@@ -102,6 +102,7 @@ end_time = start_time + datetime.timedelta(days=1)
 money = get_balance("KRW")
 buy_price = 0
 sell_price = 0
+today_buy_count = 0
 time.sleep(0.2)
 post_message(myToken, "#coin", "Start CAT_test!\n"+str(now.replace(microsecond=0)))
 post_message(myToken, "#coin", "Account balance: "+str(int(money))+"won")
@@ -141,14 +142,15 @@ while True:
                 if tickers[ticker][0] <= current_price and tickers[ticker][1] is False:
                     # check: attain
                     tickers[ticker][1] = True
-                    # buy: false & not dangerous & after 09:10:00 >> do buy
-                    if buy is False and today_buy is True and tickers[ticker][2] is False \
-                            and now >= start_time + datetime.timedelta(minutes=10):
+                    # buy: false & not dangerous & 09:30 ~ 07:00 & buy_count < 2 >> do buy
+                    if buy is False and today_buy is True and tickers[ticker][2] is False and today_buy_count < 2\
+                            and (start_time + datetime.timedelta(minutes=30) <= now < start_time + datetime.timedelta(hours=22)):
                         krw = get_balance("KRW")
                         buy_price = current_price
                         upbit.buy_market_order(ticker, krw*0.9995) # buy: market order
                         buy = True
                         tickers[ticker][2] = True
+                        today_buy_count += 1
                         now = datetime.datetime.now() + datetime.timedelta(hours=9)
                         buy_time = now
                         current_ticker = ticker
@@ -167,7 +169,7 @@ while True:
                     upbit.sell_market_order(current_ticker, coin) # sell: market order
                     buy = False
                     now = datetime.datetime.now() + datetime.timedelta(hours=9)
-                    if current_price < current_open:
+                    if current_price < current_open * 0.98:
                         post_message(myToken, "#coin", "Safety net operation. Emergency sell!\nStop today's trading.")
                         today_buy = False
                     else:
@@ -208,8 +210,9 @@ while True:
                     coin = get_balance(current_ticker[4:])
                     upbit.sell_market_order(current_ticker, coin)  # sell: market order
                     buy = False
+                    today_buy = False
                     now = datetime.datetime.now() + datetime.timedelta(hours=9)
-                    post_message(myToken, "#coin", "Get 0%!")
+                    post_message(myToken, "#coin", "Get 0%!\nStop today's trading.")
                     post_message(myToken, "#coin",
                                  "Sell " + str(coin) + " " + current_ticker + "\n" + str(now.replace(microsecond=0)))
                     post_message(myToken, "#coin", "Sell price: " + str(sell_price))
@@ -247,6 +250,7 @@ while True:
             # after 09:00:00 >> time change
             start_time = get_start_time()
             today_start = True
+            today_buy_count = 0
             time.sleep(0.1)
             end_time = start_time + datetime.timedelta(days=1)
             for ticker in tickers:
