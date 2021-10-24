@@ -8,7 +8,6 @@
     This program is made based on Larry Williams' volatility breakthrough strategy.
     I highly recommend you to change this program code by your own trading algorithms and use it.
     This program is made to use 'Upbit' api.
-    This version is not recommended. Use v.1.3.
 """
 
 
