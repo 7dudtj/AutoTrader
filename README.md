@@ -11,15 +11,15 @@ responsibility of using this program is all up to you. too.
 This program is made based on Larry Williams' volatility breakthrough strategy.  
 I highly recommend you to change this program code by your own trading algorithms and use it.  
 This program is made to use 'Upbit' api.  
-This program is not developed yet. But if you want to use, then I recommend ver 1.3.
+This program is not developed yet. But if you want to use, then I recommend ver 1.4.
 
 ### Ubuntu 서버 명령어
 
 #### <백그라운드 실행>
 
-ver 1.3.5: nohup python3 cat_v.1.3.5.py > output.log &
-
 ver 1.4.3: nohup python3 cat_v.1.4.3.py > output.log &
+
+ver 1.5.0: nohup python3 cat_v.1.5.0.py > output.log &
  
 test code: nohup python3 test.py > output.log &
 
