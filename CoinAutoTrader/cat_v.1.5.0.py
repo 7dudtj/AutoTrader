@@ -104,7 +104,7 @@ buy_price = 0
 sell_price = 0
 today_buy_count = 0
 time.sleep(0.2)
-post_message(myToken, "#coin", "Start CAT_ver.1.5.0!\n"+str(now.replace(microsecond=0)))
+post_message(myToken, "#coin", "Start CAT_ver.1.5.1!\n"+str(now.replace(microsecond=0)))
 post_message(myToken, "#coin", "Account balance: "+str(int(money))+"won")
 
 # set tickers information
@@ -129,6 +129,7 @@ while True:
             # start new day
             if today_start is True:
                 post_message(myToken, "#coin", "----------------------------------------\n"
+                                               "----------------------------------------\n"
                                                "Good morning! CAT start!\n"+str(now.replace(microsecond=0)))
                 post_message(myToken, "#coin", "Today's trading? "+str(today_buy))
                 krw = get_balance("KRW")
@@ -156,7 +157,8 @@ while True:
                         current_ticker = ticker
                         df = pyupbit.get_ohlcv(current_ticker, interval="day", count=1)
                         current_open = df.iloc[0]['open']
-                        post_message(myToken, "#coin", "Buy "+current_ticker+": "+str(int(krw*0.9995))+"won\n"+str(now.replace(microsecond=0)))
+                        post_message(myToken, "#coin", "/----------------------------------------\\\n"
+                                                       "Buy "+current_ticker+": "+str(int(krw*0.9995))+"won\n"+str(now.replace(microsecond=0)))
                         post_message(myToken, "#coin", "Buy price: "+str(buy_price))
                         time.sleep(0.3)
                 # my coin rises 5% already: sell coin
@@ -177,7 +179,8 @@ while True:
                     post_message(myToken, "#coin", "Sell "+str(coin)+" "+current_ticker+"\n"+str(now.replace(microsecond=0)))
                     post_message(myToken, "#coin", "Sell price: "+str(sell_price))
                     krw = get_balance("KRW")
-                    post_message(myToken, "#coin", "Account balance: "+str(int(krw))+"won")
+                    post_message(myToken, "#coin", "Account balance: "+str(int(krw))+"won\n"
+                                                    "\\----------------------------------------/")
                     # reset data
                     current_ticker = ""
                     current_open = 0
@@ -196,7 +199,8 @@ while True:
                     post_message(myToken, "#coin", "Sell " + str(coin) + " " + current_ticker + "\n" + str(now.replace(microsecond=0)))
                     post_message(myToken, "#coin", "Sell price: " + str(sell_price))
                     krw = get_balance("KRW")
-                    post_message(myToken, "#coin", "Account balance: " + str(int(krw)) + "won")
+                    post_message(myToken, "#coin", "Account balance: " + str(int(krw)) + "won\n"
+                                                    "\\----------------------------------------/")
                     # reset data
                     current_ticker = ""
                     current_open = 0
@@ -217,7 +221,8 @@ while True:
                                  "Sell " + str(coin) + " " + current_ticker + "\n" + str(now.replace(microsecond=0)))
                     post_message(myToken, "#coin", "Sell price: " + str(sell_price))
                     krw = get_balance("KRW")
-                    post_message(myToken, "#coin", "Account balance: " + str(int(krw)) + "won")
+                    post_message(myToken, "#coin", "Account balance: " + str(int(krw)) + "won\n"
+                                                    "\\----------------------------------------/")
                     # reset data
                     current_ticker = ""
                     current_open = 0
@@ -238,7 +243,8 @@ while True:
                 post_message(myToken, "#coin", "Sell "+str(coin)+" "+current_ticker+"\n"+str(now.replace(microsecond=0)))
                 post_message(myToken, "#coin", "Sell price: "+str(sell_price))
                 krw = get_balance("KRW")
-                post_message(myToken, "#coin", "Account balance: " + str(int(krw)) + "won")
+                post_message(myToken, "#coin", "Account balance: " + str(int(krw)) + "won\n"
+                                                "\\----------------------------------------/")
                 # reset data
                 current_ticker = ""
                 current_open = 0
