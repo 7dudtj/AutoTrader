@@ -268,9 +268,13 @@ while True:
             today_buy_count = 0
             time.sleep(0.1)
             end_time = start_time + datetime.timedelta(days=1)
+            now = datetime.datetime.now() + datetime.timedelta(hours=9) # for test
+            post_message(myToken, "#time to set tickers\n"+str(now)) # for test
             for ticker in tickers:
                 tickers[ticker][0], tickers[ticker][1], tickers[ticker][2] = set_tickers(ticker, k)
                 time.sleep(0.1)
+            now = datetime.datetime.now() + datetime.timedelta(hours=9) # for test
+            post_message(myToken, "#set tickers finished\n"+str(now)) # for test
     except Exception as e:
         post_message(myToken, "#coin", "Error: "+str(e))
         time.sleep(1)
