@@ -17,9 +17,9 @@ This program is not developed yet. But if you want to use, then I recommend ver 
 
 #### <백그라운드 실행>
 
-ver 1.4.3: nohup python3 cat_v.1.4.3.py > output.log &
-
 ver 1.5.1: nohup python3 cat_v.1.5.1.py > output.log &
+
+ver 1.6.0: nohup python3 cat_v.1.6.0.py > output.log &
  
 test code: nohup python3 test.py > output.log &
 
