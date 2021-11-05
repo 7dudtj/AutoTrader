@@ -8,7 +8,7 @@
     This program is made based on Larry Williams' volatility breakthrough strategy.
     I highly recommend you to change this program code by your own trading algorithms and use it.
     This program is made to use 'Upbit' api.
-    This version is not recommended. Use v.1.4.
+    This version is not recommended. Use v.1.5.
 """
 
 
@@ -26,8 +26,8 @@ myToken = "" # slack token
 
 
 # functions ------------------------------------------------------------------------------
-# set tickers (target price, attain target price, danger) >> 10/s
-def set_tickers(ticker, k):
+# set ticker (target price, attain target price, danger) >> 10/s
+def set_ticker(ticker, k):
     # get target price
     df = pyupbit.get_ohlcv(ticker, interval="day", count=6)
     target_price = df.iloc[-2]['close'] + (df.iloc[-2]['high'] - df.iloc[-2]['low']) * k
@@ -40,13 +40,33 @@ def set_tickers(ticker, k):
         target = ma5
         danger = True # target_price < ma5: danger
 
-    # find dangerous situation
-    range = 0.1
+    # find dangerous situation (1)
+    range = 0.08
     if df.iloc[-2]['low'] * range <= (df.iloc[-2]['high'] - df.iloc[-2]['low']):
+        danger = True
+
+    # find dangerous situation (2)
+    if (df.iloc[-2]['close'] < ma5):
         danger = True
 
     # return [target, attain(False), danger]
     return target, False, danger
+
+# set tickers >> 0.1s * (number of tickers)
+def set_tickers(tickers, new_start):
+    try:
+        for ticker in tickers:
+            tickers[ticker][0], tickers[ticker][1], tickers[ticker][2] = set_ticker(ticker, k)
+            if (new_start):
+                df = pyupbit.get_ohlcv(ticker, interval="day", count=2)
+                if tickers[ticker][0] <= df.iloc[1]['high']:
+                    tickers[ticker][1] = True
+                time.sleep(0.1)
+            time.sleep(0.1)
+        post_message(myToken, "#coin", "Get tickers information successfully!")
+    except Exception as e:
+        post_message(myToken, "#coin", "Error: "+str(e)+"\nReset tickers")
+        set_tickers(tickers, new_start)
 
 # 09:00 >> 10/s
 def get_start_time():
@@ -109,17 +129,8 @@ time.sleep(0.2)
 post_message(myToken, "#coin", "Start CAT_test!\n"+str(now.replace(microsecond=0)))
 post_message(myToken, "#coin", "Account balance: "+str(int(money))+"won")
 
-# set tickers information
-try:
-    for ticker in tickers:
-        tickers[ticker][0], tickers[ticker][1], tickers[ticker][2] = set_tickers(ticker, k)
-        df = pyupbit.get_ohlcv(ticker, interval="day", count=2)
-        if tickers[ticker][0] <= df.iloc[1]['high']:
-            tickers[ticker][1] = True
-        time.sleep(0.2)
-except Exception as e:
-    post_message(myToken, "#coin", "Error: "+str(e))
-post_message(myToken, "#coin", "Get tickers information successfully!")
+# set tickers information for the first time
+set_tickers(tickers, True)
 
 # main process
 while True:
@@ -268,13 +279,7 @@ while True:
             today_buy_count = 0
             time.sleep(0.1)
             end_time = start_time + datetime.timedelta(days=1)
-            now = datetime.datetime.now() + datetime.timedelta(hours=9) # for test
-            post_message(myToken, "#coin", "#time to set tickers\n"+str(now)) # for test
-            for ticker in tickers:
-                tickers[ticker][0], tickers[ticker][1], tickers[ticker][2] = set_tickers(ticker, k)
-                time.sleep(0.1)
-            now = datetime.datetime.now() + datetime.timedelta(hours=9) # for test
-            post_message(myToken, "#coin", "#set tickers finished\n"+str(now)) # for test
+            set_tickers(tickers, False)
     except Exception as e:
         post_message(myToken, "#coin", "Error: "+str(e))
         time.sleep(1)
