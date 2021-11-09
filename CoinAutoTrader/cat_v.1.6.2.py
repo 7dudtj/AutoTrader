@@ -62,8 +62,8 @@ def set_tickers(tickers, new_start):
                 if tickers[ticker][0] <= df.iloc[1]['high']:
                     tickers[ticker][1] = True
                 time.sleep(0.1)
-                post_message(myToken, "#coin", "Get tickers information successfully!")
             time.sleep(0.1)
+        post_message(myToken, "#coin", "Get tickers information successfully!")
     except Exception as e:
         post_message(myToken, "#coin", "Error: "+str(e)+"\nReset tickers")
         set_tickers(tickers, new_start)
@@ -126,7 +126,7 @@ buy_price = 0
 sell_price = 0
 today_buy_count = 0
 time.sleep(0.2)
-post_message(myToken, "#coin", "Start CAT_1.6.1!\n"+str(now.replace(microsecond=0)))
+post_message(myToken, "#coin", "Start CAT_1.6.2!\n"+str(now.replace(microsecond=0)))
 post_message(myToken, "#coin", "Account balance: "+str(int(money))+"won")
 
 # set tickers information for the first time
