@@ -34,6 +34,7 @@ time.sleep(5)
 
 
 # get id, pwd, and pwdcert
+# with open('C:/Users/7dudt/Desktop/key/stock_keys.txt') as f:
 with open('keys.txt') as f:
     lines = f.readlines()
     id = lines[0].strip()
