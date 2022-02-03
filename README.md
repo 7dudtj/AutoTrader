@@ -3,6 +3,12 @@ Auto Trading Program
 
 ## CoinAutoTrader
 'Coin Auto Trader' by Youngseo Yoo (github.com/7dudtj)  
+<details>
+<summary>
+Click here to see information about 'Coin Auto Trader'!
+</summary>
+<div>
+
 ### Warning!  
 This program does not guarantee you to earn money.  
 You can lose all of your money by various reasons, including program errors.  
@@ -10,8 +16,8 @@ Responsibility of investment is all up to you, and
 responsibility of using this program is all up to you. too.  
 This program is made based on Larry Williams' volatility breakthrough strategy.  
 I highly recommend you to change this program code by your own trading algorithms and use it.  
-This program is made to use 'Upbit' api.  
-This program is not developed yet. But if you want to use, then I recommend ver 1.6.3.
+This program is made to use 'Upbit' api.
+If you want to use, then I recommend ver 1.6.3.
 
 ### Ubuntu 서버 명령어
 
@@ -22,7 +28,6 @@ ver 1.6.3: nohup python3 cat_v.1.6.3.py > output.log &
 #### <실행되고 있는지 확인> 
 
 ps ax | grep .py
- 
 
 #### <프로세스 종료>(PID는 ps ax | grep .py를 했을때 확인 가능)
 
@@ -33,6 +38,28 @@ kill -9 PID
 리스트 업데이트: apt-get update 
 
 업그레이드: sudo apt-get upgrade
+</div>
+</details>
+
+## EtfAutoTrader
+'Etf Auto Trader' by Youngseo Yoo (github.com/7dudtj)  
+<details>
+<summary>
+Click here to see information about 'Etf Auto Trader'!
+</summary>
+<div>
+
+### Warning!  
+This program does not guarantee you to earn money.  
+You can lose all of your money by various reasons, including program errors.  
+Responsibility of investment is all up to you, and  
+responsibility of using this program is all up to you. too.  
+This program is made based on Larry Williams' volatility breakthrough strategy.  
+I highly recommend you to change this program code by your own trading algorithms and use it.  
+This program is made to use 'CREON' api.  
+This program is not developed yet. But if you want to use, then I recommend ver 1.0.0.
+</div>
+</details>
 
 ## License
 
