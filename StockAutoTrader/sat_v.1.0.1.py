@@ -9,7 +9,7 @@
     I highly recommend you to change this program code by your own trading algorithms and use it.
     This program is made to use 'Creon' api.
 
-    'sat_v.1.0.0.py' will automatically trade Stocks at Korea Stock Market.
+    'sat_v.1.0.1.py' will automatically trade Stocks at Korea Stock Market.
 
     This program only runs on Windows by 32bit python.
     Your computer's OS must be Windows, and you have to run this program at 32bit python.
@@ -278,11 +278,13 @@ def sell_all():
 # main logic
 if __name__ == '__main__':
     try:
-        symbol_list = ['A122630', 'A252670', 'A233740', 'A250780', 'A225130',
-                       'A280940', 'A261220', 'A217770', 'A295000', 'A176950']
+        # ex) symbol_list = ['A122630', 'A252670']
+        # symbol_list is list of target items
+        # you need to fill symbol_list
+        symbol_list = []
         bought_list = []
-        target_buy_count = 5
-        buy_percent = 0.19
+        target_buy_count = 5 # number of item to buy
+        buy_percent = 0.19 # (1 / target_buy_count) - commision
         printlog('check_creon_system() :', check_creon_system())  # check creon connection
         stocks = get_stock_balance('ALL')
         total_cash = int(get_current_cash())
