@@ -26,7 +26,6 @@ import time, requests
 
 
 # get slack token
-# with open('C:/Users/7dudt/Desktop/key/stock_keys.txt') as f:
 with open('keys.txt') as f:
     lines = f.readlines()
     token = lines[3].strip()
