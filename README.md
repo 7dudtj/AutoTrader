@@ -41,11 +41,11 @@ kill -9 PID
 </div>
 </details>
 
-## EtfAutoTrader
-'Etf Auto Trader' by Youngseo Yoo (github.com/7dudtj)  
+## StockAutoTrader
+'Stock Auto Trader' by Youngseo Yoo (github.com/7dudtj)  
 <details>
 <summary>
-Click here to see information about 'Etf Auto Trader'!
+Click here to see information about 'Stock Auto Trader'!
 </summary>
 <div>
 

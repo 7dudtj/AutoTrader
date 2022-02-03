@@ -37,7 +37,7 @@ def set_ticker(ticker, k):
         target = target_price
     else:
         target = ma5
-        danger = True # target_price < ma5: danger
+        danger = True # target_price < ma5: danger 
 
     # find dangerous situation (1)
     range = 0.08

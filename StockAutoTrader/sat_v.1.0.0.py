@@ -1,5 +1,5 @@
 """
-    'Etf Auto Trader' by Youngseo Yoo (github.com/7dudtj)
+    'Stock Auto Trader' by Youngseo Yoo (github.com/7dudtj)
     Warning!
     This program does not guarantee you to earn money.
     You can lose all of your money by various reasons, including program errors.
@@ -9,7 +9,7 @@
     I highly recommend you to change this program code by your own trading algorithms and use it.
     This program is made to use 'Creon' api.
 
-    'eat_v.1.0.0.py' will automatically trade ETFs at Korea Stock Market.
+    'sat_v.1.0.0.py' will automatically trade Stocks at Korea Stock Market.
 
     This program only runs on Windows by 32bit python.
     Your computer's OS must be Windows, and you have to run this program at 32bit python.

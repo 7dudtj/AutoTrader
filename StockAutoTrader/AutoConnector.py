@@ -1,5 +1,5 @@
 """
-    'Etf Auto Trader' by Youngseo Yoo (github.com/7dudtj)
+    'Stock Auto Trader' by Youngseo Yoo (github.com/7dudtj)
     Warning!
     This program does not guarantee you to earn money.
     You can lose all of your money by various reasons, including program errors.
