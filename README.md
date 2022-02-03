@@ -1,8 +1,6 @@
-# AutoTrader
-Auto Trading Program
-
-## CoinAutoTrader
+# CoinAutoTrader
 'Coin Auto Trader' by Youngseo Yoo (github.com/7dudtj)  
+  
 <details>
 <summary>
 Click here to see information about 'Coin Auto Trader'!
@@ -41,8 +39,9 @@ kill -9 PID
 </div>
 </details>
 
-## StockAutoTrader
+# StockAutoTrader
 'Stock Auto Trader' by Youngseo Yoo (github.com/7dudtj)  
+   
 <details>
 <summary>
 Click here to see information about 'Stock Auto Trader'!
