@@ -34,11 +34,14 @@ time.sleep(5)
 
 
 # get id, pwd, and pwdcert
+
+# you need to fill id, pwd, and pwdcert at 'keys.txt' file-------
 with open('keys.txt') as f:
     lines = f.readlines()
-    id = lines[0].strip()
-    pwd = lines[1].strip()
-    pwdcert = lines[2].strip()
+    id = lines[0].strip() # line 1: id
+    pwd = lines[1].strip() # line 2: pwd
+    pwdcert = lines[2].strip() # line 3: pwdcert
+# --------------------------------------------------------------- 
 
 
 # start CREON
