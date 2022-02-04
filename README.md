@@ -1,3 +1,10 @@
+# Auto Trader
+Welcome to Auto Trader!  
+There are two types of Auto Trading Programs.  
+
+Coin Auto Trader (a.k.a CAT) is coin trading program.  
+Stock Auto Trader (a.k.a SAT) is stock trading program.
+
 # CoinAutoTrader
 'Coin Auto Trader' by Youngseo Yoo (github.com/7dudtj)  
   
