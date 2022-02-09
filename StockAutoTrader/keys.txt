@@ -1,4 +1,4 @@
-# CREON id
-# CREON pwd
-# CREON pwdcert
+# CREON ID
+# CREON PWD
+# CREON PWDCERT
 # Slack token
