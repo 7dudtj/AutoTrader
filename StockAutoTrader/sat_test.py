@@ -224,11 +224,23 @@ def buy_etf(code):
             cpOrder.SetInputValue(7, "2")  # option >> 0:basic, 1:IOC, 2:FOK
             cpOrder.SetInputValue(8, "12")
             ret = cpOrder.BlockRequest()
+            rqStatus = cpOrder.GetDibStatus() # for test
+            errMsg = cpOrder.GetDibMsg1() # for test
             printlog('FoK buy ->', stock_name, code, buy_qty, '->', ret)
             if ret == 4:
                 remain_time = cpStatus.LimitRequestRemainTime
                 printlog('Warning: Consecutive order restrict. Waiting time:', remain_time / 1000)
                 time.sleep(remain_time / 1000)
+                return False
+            # for test
+            if ret != 0:
+                printlog('Order request error:', str(ret))
+                post_message(token, '#stock', 'Order request error: '+str(ret))
+                return False
+            # for test
+            if rqStatus != 0:
+                printlog('Order fail:', rqStatus, errMsg)
+                post_message(token, '#stock', 'Order fail: '+str(rqStatus)+', '+str(errMsg))
                 return False
             time.sleep(2)
             printlog('Possible order price :', buy_amount)
