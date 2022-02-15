@@ -120,7 +120,6 @@ def get_stock_balance(code):
     if code == 'ALL':
         post_message(token, '#stock', datetime.now().strftime('[%m/%d %H:%M:%S]')+'\n'
                      'Account Name: ' + str(cpBalance.GetHeaderValue(0))+'\n'
-                     'Payment balance : ' + str(cpBalance.GetHeaderValue(1))+'won\n'
                      'Evaluation amount: ' + str(cpBalance.GetHeaderValue(3))+'won\n'
                      'Evaluation profit and loss: ' + str(cpBalance.GetHeaderValue(4))+'won\n'
                      'Number of items: ' + str(cpBalance.GetHeaderValue(7)))
@@ -168,7 +167,7 @@ def get_target_price(code):
             today_open = lastday[3]
         lastday_high = lastday[1]
         lastday_low = lastday[2]
-        target_price = today_open + (lastday_high - lastday_low) * 0.5
+        target_price = today_open + (lastday_high - lastday_low) * 0.1 # for test
         return target_price
     except Exception as ex:
         post_message(token, '#stock', datetime.now().strftime('[%m/%d %H:%M:%S]')+'\n'
@@ -214,8 +213,6 @@ def buy_etf(code):
                 and current_price > ma10_price:
             printlog(stock_name + '(' + str(code) + ') ' + str(buy_qty) +
                      'EA : ' + str(current_price) + ' meets the buy condition!`')
-            post_message(token, '#stock', stock_name + '(' + str(code) + ') ' + str(buy_qty) +
-                     'EA : ' + str(current_price) + ' meets the buy condition!`')
             cpTradeUtil.TradeInit()
             acc = cpTradeUtil.AccountNumber[0]  # account number
             accFlag = cpTradeUtil.GoodsList(acc, 1)  # -1:total,1:stock,2:futures/option
@@ -228,7 +225,6 @@ def buy_etf(code):
             cpOrder.SetInputValue(8, "12")
             ret = cpOrder.BlockRequest()
             printlog('FoK buy ->', stock_name, code, buy_qty, '->', ret)
-            post_message(token, '#stock', 'FoK buy ->', stock_name, code, buy_qty, '->', ret)
             if ret == 4:
                 remain_time = cpStatus.LimitRequestRemainTime
                 printlog('Warning: Consecutive order restrict. Waiting time:', remain_time / 1000)
@@ -272,8 +268,6 @@ def sell_all():
                     cpOrder.SetInputValue(8, "12")
                     ret = cpOrder.BlockRequest()
                     printlog('IOC sell', s['code'], s['name'], s['qty'],
-                             '-> cpOrder.BlockRequest() -> returned', ret)
-                    post_message(token, '#stock', 'IOC sell', s['code'], s['name'], s['qty'],
                              '-> cpOrder.BlockRequest() -> returned', ret)
                     if ret == 4:
                         remain_time = cpStatus.LimitRequestRemainTime
@@ -325,7 +319,6 @@ if __name__ == '__main__':
             # Sat or Sun >> End program
             if today == 5 or today == 6:
                 printlog('Today is', 'Saturday.' if today == 5 else 'Sunday.')
-                post_message(token, '#stock', 'Today is', 'Saturday.' if today == 5 else 'Sunday.')
                 sys.exit(0)
             # sell unsold items before trading start
             if t_9 < t_now < t_start and soldout == False: 

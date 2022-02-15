@@ -9,7 +9,7 @@
     I highly recommend you to change this program code by your own trading algorithms and use it.
     This program is made to use 'Creon' api.
 
-    'sat_v.1.1.2.py' will automatically trade Stocks at Korea Stock Market.
+    'sat_v.1.0.5.py' will automatically trade Stocks at Korea Stock Market.
 
     This program only runs on Windows by 32bit python.
     Your computer's OS must be Windows, and you have to run this program at 32bit python.
@@ -118,9 +118,8 @@ def get_stock_balance(code):
     cpBalance.SetInputValue(2, 50)
     cpBalance.BlockRequest()
     if code == 'ALL':
-        post_message(token, '#stock', datetime.now().strftime('[%m/%d %H:%M:%S]')+'\n'
+        post_message(token, '#coin', datetime.now().strftime('[%m/%d %H:%M:%S]')+'\n'
                      'Account Name: ' + str(cpBalance.GetHeaderValue(0))+'\n'
-                     'Payment balance : ' + str(cpBalance.GetHeaderValue(1))+'won\n'
                      'Evaluation amount: ' + str(cpBalance.GetHeaderValue(3))+'won\n'
                      'Evaluation profit and loss: ' + str(cpBalance.GetHeaderValue(4))+'won\n'
                      'Number of items: ' + str(cpBalance.GetHeaderValue(7)))
@@ -130,7 +129,7 @@ def get_stock_balance(code):
         stock_name = cpBalance.GetDataValue(0, i)  # item name
         stock_qty = cpBalance.GetDataValue(15, i)  # count
         if code == 'ALL':
-            post_message(token, '#stock', str(i + 1) + ' - ' + stock_code + '(' + stock_name + ')'
+            post_message(token, '#coin', str(i + 1) + ' - ' + stock_code + '(' + stock_name + ')'
                    + ' : ' + str(stock_qty))
             stocks.append({'code': stock_code, 'name': stock_name,
                            'qty': stock_qty})
@@ -171,7 +170,7 @@ def get_target_price(code):
         target_price = today_open + (lastday_high - lastday_low) * 0.5
         return target_price
     except Exception as ex:
-        post_message(token, '#stock', datetime.now().strftime('[%m/%d %H:%M:%S]')+'\n'
+        post_message(token, '#coin', datetime.now().strftime('[%m/%d %H:%M:%S]')+'\n'
                                 "`get_target_price() -> exception! " + str(ex) + "`")
         return None
 
@@ -190,7 +189,7 @@ def get_movingaverage(code, window):
         ma = closes.rolling(window=window).mean()
         return ma.loc[lastday]
     except Exception as ex:
-        post_message(token, '#stock', datetime.now().strftime('[%m/%d %H:%M:%S]')+'\n'
+        post_message(token, '#coin', datetime.now().strftime('[%m/%d %H:%M:%S]')+'\n'
                     'get_movingaverage(' + str(window) + ') -> exception! ' + str(ex))
         return None
 
@@ -237,11 +236,11 @@ def buy_etf(code):
             printlog('get_stock_balance :', stock_name, stock_qty)
             if bought_qty > 0:
                 bought_list.append(code)
-                post_message(token, '#stock', datetime.now().strftime('[%m/%d %H:%M:%S]')+'\n'
+                post_message(token, '#coin', datetime.now().strftime('[%m/%d %H:%M:%S]')+'\n'
                                         "`buy_etf (" + str(stock_name) + ' : ' + str(code) + 
                                         ") -> " + str(bought_qty) + "EA bought!" + "`")
     except Exception as ex:
-        post_message(token, '#stock', datetime.now().strftime('[%m/%d %H:%M:%S]')+'\n'
+        post_message(token, '#coin', datetime.now().strftime('[%m/%d %H:%M:%S]')+'\n'
                         "`buy_etf (" + str(code) + ") -> exception! " + str(ex) + "`")
 
 
@@ -276,7 +275,7 @@ def sell_all():
                 time.sleep(1)
             time.sleep(30)
     except Exception as ex:
-        post_message(token, '#stock', datetime.now().strftime('[%m/%d %H:%M:%S]')+'\n'
+        post_message(token, '#coin', datetime.now().strftime('[%m/%d %H:%M:%S]')+'\n'
                                                 "sell_all() -> exception! " + str(ex))
 # End of functions ---------------------------------------------------------------
 
@@ -286,20 +285,11 @@ if __name__ == '__main__':
     try:
         # ex) symbol_list = ['A122630', 'A252670']
         # symbol_list is list of target items
-        # code will get symbol_list from symbols.txt file
-
-        # you need to fill symbol_list at 'symbols.txt' file-------------
-        with open('symbols.txt') as f:
-            lines = f.readlines()
-            symbol_list = lines[0].split()
+        # you need to fill symbol_list
+        symbol_list = ['A252670', 'A251340', 'A091160', 'A396500', 'A401590', 'A218420', 'A360750', 'A091170']
         bought_list = []
-        # ---------------------------------------------------------------
-
-        # you need to change here by yourself----------------------------
-        target_buy_count = 3 # number of items to buy
+        target_buy_count = 3 # number of item to buy
         buy_percent = 0.33 # (1 / target_buy_count) - commision
-        # ---------------------------------------------------------------
-
         printlog('check_creon_system() :', check_creon_system())  # check creon connection
         stocks = get_stock_balance('ALL')
         total_cash = int(get_current_cash())
@@ -338,14 +328,14 @@ if __name__ == '__main__':
             # PM 03:15 ~ PM 03:20 : sell all items
             if t_sell < t_now < t_exit:  
                 if sell_all() == True:
-                    post_message(token, '#stock', datetime.now().strftime('[%m/%d %H:%M:%S]')+'\n'
+                    post_message(token, '#coin', datetime.now().strftime('[%m/%d %H:%M:%S]')+'\n'
                                                 '`sell_all() returned True -> self-destructed!`')
                     sys.exit(0)
             if t_exit < t_now:  # PM 03:20 ~ :End program
-                post_message(token, '#stock', datetime.now().strftime('[%m/%d %H:%M:%S]')+'\n'
+                post_message(token, '#coin', datetime.now().strftime('[%m/%d %H:%M:%S]')+'\n'
                                                             '`Out of time! Self-destructed!`')
                 sys.exit(0)
             time.sleep(3)
     except Exception as ex:
-        post_message(token, '#stock', datetime.now().strftime('[%m/%d %H:%M:%S]')+'\n'
+        post_message(token, '#coin', datetime.now().strftime('[%m/%d %H:%M:%S]')+'\n'
                                                 '`main -> exception! ' + str(ex) + '`')
