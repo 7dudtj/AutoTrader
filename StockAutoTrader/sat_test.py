@@ -224,20 +224,19 @@ def buy_etf(code):
             cpOrder.SetInputValue(7, "2")  # option >> 0:basic, 1:IOC, 2:FOK
             cpOrder.SetInputValue(8, "12")
             ret = cpOrder.BlockRequest()
-            rqStatus = cpOrder.GetDibStatus() # for test
-            errMsg = cpOrder.GetDibMsg1() # for test
+            rqStatus = cpOrder.GetDibStatus()
+            errMsg = cpOrder.GetDibMsg1()
             printlog('FoK buy ->', stock_name, code, buy_qty, '->', ret)
+            # check trading error
             if ret == 4:
                 remain_time = cpStatus.LimitRequestRemainTime
                 printlog('Warning: Consecutive order restrict. Waiting time:', remain_time / 1000)
                 time.sleep(remain_time / 1000)
                 return False
-            # for test
             if ret != 0:
                 printlog('Order request error:', str(ret))
                 post_message(token, '#stock', 'Order request error: '+str(ret))
                 return False
-            # for test
             if rqStatus != 0:
                 printlog('Order fail:', rqStatus, errMsg)
                 post_message(token, '#stock', 'Order fail: '+str(rqStatus)+', '+str(errMsg))
@@ -303,8 +302,8 @@ if __name__ == '__main__':
         with open('symbols.txt') as f:
             lines = f.readlines()
             symbol_list = lines[0].split()
-        bought_list = []
         # ---------------------------------------------------------------
+        bought_list = []
 
         # you need to change here by yourself----------------------------
         target_buy_count = 3 # number of items to buy
