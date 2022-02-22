@@ -346,7 +346,7 @@ if __name__ == '__main__':
                     get_stock_balance('ALL')
                     time.sleep(5)
                 # for test
-                elif t_now.minute % 10 == 0 and 0 <= t_now.second <= 5:
+                elif t_now.minute % 15 == 0 and 0 <= t_now.second <= 5:
                     post_message(token, '#stock', datetime.now().strftime('[%m/%d %H:%M:%S]'))
                     time.sleep(5)
             # PM 03:15 ~ PM 03:20 : sell all items
