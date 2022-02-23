@@ -167,7 +167,7 @@ def get_target_price(code):
             today_open = lastday[3]
         lastday_high = lastday[1]
         lastday_low = lastday[2]
-        target_price = today_open + (lastday_high - lastday_low) * 0.1 # for test
+        target_price = today_open + (lastday_high - lastday_low) * 0.5 # for test
         return target_price
     except Exception as ex:
         post_message(token, '#stock', datetime.now().strftime('[%m/%d %H:%M:%S]')+'\n'
@@ -239,7 +239,8 @@ def buy_etf(code):
                 return False
             if rqStatus != 0:
                 printlog('Order fail:', rqStatus, errMsg)
-                post_message(token, '#stock', 'Order fail: '+str(rqStatus)+', '+str(errMsg))
+                post_message(token, '#stock', 'Order fail: '+str(rqStatus)+', '+str(errMsg)+
+                '\nstock: '+str(stock_name)+' '+str(code))
                 return False
             time.sleep(2)
             printlog('Possible order price :', buy_amount)
@@ -306,8 +307,8 @@ if __name__ == '__main__':
         bought_list = []
 
         # you need to change here by yourself----------------------------
-        target_buy_count = 3 # number of items to buy
-        buy_percent = 0.33 # (1 / target_buy_count) - commision
+        target_buy_count = 2 # number of items to buy
+        buy_percent = 0.499 # (1 / target_buy_count) - commision
         # ---------------------------------------------------------------
 
         printlog('check_creon_system() :', check_creon_system())  # check creon connection
