@@ -9,7 +9,7 @@
     I highly recommend you to change this program code by your own trading algorithms and use it.
     This program is made to use 'Creon' api.
 
-    'sat_v.1.1.5.py' will automatically trade Stocks at Korea Stock Market.
+    'sat_v.1.1.6.py' will automatically trade Stocks at Korea Stock Market.
 
     This program only runs on Windows by 32bit python.
     Your computer's OS must be Windows, and you have to run this program at 32bit python.
@@ -239,7 +239,8 @@ def buy_etf(code):
                 return False
             if rqStatus != 0:
                 printlog('Order fail:', rqStatus, errMsg)
-                post_message(token, '#stock', 'Order fail: '+str(rqStatus)+', '+str(errMsg))
+                post_message(token, '#stock', 'Order fail: '+str(rqStatus)+', '+str(errMsg)+
+                '\nstock: '+str(stock_name)+' '+str(code))
                 return False
             time.sleep(2)
             printlog('Possible order price :', buy_amount)

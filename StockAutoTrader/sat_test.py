@@ -308,7 +308,7 @@ if __name__ == '__main__':
 
         # you need to change here by yourself----------------------------
         target_buy_count = 2 # number of items to buy
-        buy_percent = 0.499 # (1 / target_buy_count) - commision
+        buy_percent = 0.49 # (1 / target_buy_count) - commision
         # ---------------------------------------------------------------
 
         printlog('check_creon_system() :', check_creon_system())  # check creon connection
