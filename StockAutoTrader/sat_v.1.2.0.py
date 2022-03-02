@@ -300,7 +300,8 @@ def endProgram():
     # if you want to just end stock auto trading program,
     # use second code and delete first code
 
-    os.system('shutdown -s -t 0') # first code: shut down your computer
+
+    # os.system('shutdown -s -t 0') # first code: shut down your computer
     sys.exit(0) # second code: end stock auto trader
 # End of functions ---------------------------------------------------------------
 
