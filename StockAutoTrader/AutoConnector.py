@@ -20,7 +20,14 @@
 
 # import modules
 from pywinauto import application
-import os, time
+from datetime import datetime
+import os, time, sys
+
+
+# check if today is Sat or Sun
+today = datetime.today().weekday()
+if today == 5 or today == 6:
+    sys.exit(0)
 
 
 # os operation
