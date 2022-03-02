@@ -18,11 +18,10 @@
 """
 
 # import libraries
-import sys, ctypes
+import sys, ctypes, time, requests, os
 import win32com.client
 import pandas as pd
 from datetime import datetime
-import time, requests
 
 
 # get slack token
@@ -167,7 +166,7 @@ def get_target_price(code):
             today_open = lastday[3]
         lastday_high = lastday[1]
         lastday_low = lastday[2]
-        target_price = today_open + (lastday_high - lastday_low) * 0.5 # for test
+        target_price = today_open + (lastday_high - lastday_low) * 0.5
         return target_price
     except Exception as ex:
         post_message(token, '#stock', datetime.now().strftime('[%m/%d %H:%M:%S]')+'\n'
@@ -289,6 +288,20 @@ def sell_all():
     except Exception as ex:
         post_message(token, '#stock', datetime.now().strftime('[%m/%d %H:%M:%S]')+'\n'
                                                 "sell_all() -> exception! " + str(ex))
+
+                                    
+# end function
+def endProgram():
+    # you can choose what to end
+
+    # if you want to shut down your computer when trading is finished,
+    # use first code and delete second code
+
+    # if you want to just end stock auto trading program,
+    # use second code and delete first code
+
+    os.system('shutdown -s -t 0') # first code: shut down your computer
+    sys.exit(0) # second code: end stock auto trader
 # End of functions ---------------------------------------------------------------
 
 
@@ -307,8 +320,8 @@ if __name__ == '__main__':
         bought_list = []
 
         # you need to change here by yourself----------------------------
-        target_buy_count = 2 # number of items to buy
-        buy_percent = 0.49 # (1 / target_buy_count) - commision
+        target_buy_count = 3 # number of items to buy
+        buy_percent = 0.33 # (1 / target_buy_count) - commision
         # ---------------------------------------------------------------
 
         printlog('check_creon_system() :', check_creon_system())  # check creon connection
@@ -331,7 +344,7 @@ if __name__ == '__main__':
             # Sat or Sun >> End program
             if today == 5 or today == 6:
                 printlog('Today is', 'Saturday.' if today == 5 else 'Sunday.')
-                sys.exit(0)
+                endProgram()
             # sell unsold items before trading start
             if t_9 < t_now < t_start and soldout == False: 
                 soldout = True
@@ -346,20 +359,16 @@ if __name__ == '__main__':
                 if t_now.minute == 30 and 0 <= t_now.second <= 5:
                     get_stock_balance('ALL')
                     time.sleep(5)
-                # for test
-                elif t_now.minute % 15 == 0 and 0 <= t_now.second <= 5:
-                    post_message(token, '#stock', datetime.now().strftime('[%m/%d %H:%M:%S]'))
-                    time.sleep(5)
             # PM 03:15 ~ PM 03:20 : sell all items
             if t_sell < t_now < t_exit:  
                 if sell_all() == True:
                     post_message(token, '#stock', datetime.now().strftime('[%m/%d %H:%M:%S]')+'\n'
                                                 '`sell_all() returned True -> self-destructed!`')
-                    sys.exit(0)
+                    endProgram()
             if t_exit < t_now:  # PM 03:20 ~ :End program
                 post_message(token, '#stock', datetime.now().strftime('[%m/%d %H:%M:%S]')+'\n'
                                                             '`Out of time! Self-destructed!`')
-                sys.exit(0)
+                endProgram()
             time.sleep(3)
     except Exception as ex:
         post_message(token, '#stock', datetime.now().strftime('[%m/%d %H:%M:%S]')+'\n'
