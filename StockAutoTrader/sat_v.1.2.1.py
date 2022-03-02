@@ -9,7 +9,7 @@
     I highly recommend you to change this program code by your own trading algorithms and use it.
     This program is made to use 'Creon' api.
 
-    'sat_v.1.2.0.py' will automatically trade Stocks at Korea Stock Market.
+    'sat_v.1.2.1.py' will automatically trade Stocks at Korea Stock Market.
 
     This program only runs on Windows by 32bit python.
     Your computer's OS must be Windows, and you have to run this program at 32bit python.
@@ -342,10 +342,6 @@ if __name__ == '__main__':
             t_sell = t_now.replace(hour=15, minute=15, second=0, microsecond=0)
             t_exit = t_now.replace(hour=15, minute=20, second=0, microsecond=0)
             today = datetime.today().weekday()
-            # Sat or Sun >> End program
-            if today == 5 or today == 6:
-                printlog('Today is', 'Saturday.' if today == 5 else 'Sunday.')
-                endProgram()
             # sell unsold items before trading start
             if t_9 < t_now < t_start and soldout == False: 
                 soldout = True
