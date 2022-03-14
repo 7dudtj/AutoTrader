@@ -352,9 +352,9 @@ if __name__ == '__main__':
                         buy_etf(sym)
                         time.sleep(1)
                 # send account info at h:30
-                if t_now.minute == 30 and 0 <= t_now.second <= 5:
+                if t_now.minute == 30 and 0 <= t_now.second <= 10:
                     get_stock_balance('ALL')
-                    time.sleep(5)
+                    time.sleep(10)
             # PM 03:15 ~ PM 03:20 : sell all items
             if t_sell < t_now < t_exit:  
                 if sell_all() == True:
