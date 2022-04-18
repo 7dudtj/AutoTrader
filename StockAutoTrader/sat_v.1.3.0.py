@@ -350,7 +350,7 @@ if __name__ == '__main__':
                 sell_all()
             # AM 09:05 ~ PM 03:15 : buy
             if t_start < t_now < t_sell:  
-                # search buy condition for every symbols in symbol_list
+                # search buy condition for every symbols in symbol_list 
                 for sym in symbol_list:
                     if len(bought_list) < target_buy_count:
                         buy_etf(sym)
