@@ -28,21 +28,34 @@ If you want to use, then I recommend ver 1.6.3.
 
 #### <백그라운드 실행>
 
-ver 1.6.3: nohup python3 cat_v.1.6.3.py > output.log &
+ver 1.6.4 >>
+```shell
+$ nohup python3 cat_v.1.6.4.py > output.log &
+```
  
 #### <실행되고 있는지 확인> 
 
-ps ax | grep .py
+```shell
+$ ps ax | grep .py
+```
 
 #### <프로세스 종료>(PID는 ps ax | grep .py를 했을때 확인 가능)
 
-kill -9 PID
+```shell
+$ kill -9 PID
+```
 
 #### <서버 업그레이드>
 
-리스트 업데이트: apt-get update 
+리스트 업데이트 >>
+```shell
+$ apt-get update 
+```
 
-업그레이드: sudo apt-get upgrade
+업그레이드 >>
+```shell
+$ sudo apt-get upgrade
+```
 </div>
 </details>
 
