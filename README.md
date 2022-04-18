@@ -22,7 +22,7 @@ responsibility of using this program is all up to you. too.
 This program is made based on Larry Williams' volatility breakthrough strategy.  
 I highly recommend you to change this program code by your own trading algorithms and use it.  
 This program is made to use 'Upbit' api.
-If you want to use, then I recommend ver 1.6.3.
+If you want to use, then I recommend ver 1.6.4.
 
 ### Ubuntu 서버 명령어
 
