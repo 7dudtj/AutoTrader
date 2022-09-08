@@ -1,2 +1,0 @@
-# Bithumb Access Key
-# Bithumb Secret Key
