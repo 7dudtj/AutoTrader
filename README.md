@@ -1,87 +1,56 @@
 # Auto Trader
-Welcome to Auto Trader!  
-There are two types of Auto Trading Programs.  
 
-Coin Auto Trader (a.k.a CAT) is coin trading program.  
-Stock Auto Trader (a.k.a SAT) is stock trading program.
+Auto Trader 레포지토리에 오신 여러분들을 환영합니다!  
+이 레포지토리에는 두 종류의 자동매매 프로그램이 있습니다.  
+우선, 암호화폐 자동매매 프로그램인 Coin Auto Trader가 있으며,  
+주식 자동매매 프로그램인 Stock Auto Trader가 있습니다.  
 
-# CoinAutoTrader
-'Coin Auto Trader' by Youngseo Yoo (github.com/7dudtj)  
-  
+원하시는 프로그램에 대한 자세한 정보는 해당 레포지토리에서 확인할 수 있습니다!  
+
+<ins>**Auto Trader는 수익을 보장하지 않으며, 큰 손실을 유발할 수 있습니다.**</ins>  
+<ins>**모든 투자의 책임은 본인에게 있습니다.**</ins>  
+
+---
+
+## What is Auto Trader?
+
+Auto Trader는 알고리즘 기반의 자동매매 프로그램입니다.  
+사람의 감정과 심리가 반영되지 않으며, 전략에 따라서만 트레이딩을 진행합니다.  
+Auto Trader는 래리 윌리엄스의 변동성 돌파 전략을 기반으로 하며,  
+몇몇 부수적인 전략을 추가하여 작성되어 있습니다.  
+
+---
+
+## Coin Auto Trader
+
+암호화폐 자동매매 프로그램에 대하여 알고싶으시다면,  
+[Coin Auto Trader](https://github.com/7dudtj/AutoTrader/tree/main/CoinAutoTrader) 에서 확인하실 수 있습니다.
+
+## Stock Auto Trader
+
+주식 자동매매 프로그램에 대하여 알고싶으시다면,  
+[Stock Auto Trader](https://github.com/7dudtj/AutoTrader/tree/main/StockAutoTrader) 에서 확인하실 수 있습니다.
+
+---
+
+## Warning
+
+<p align="center">
+  <img width="400" src="https://user-images.githubusercontent.com/67851701/174976264-43524462-13e8-4dda-b66d-2278297aa9a4.jpg">
+</p> 
+
+<ins>**모든 투자의 책임은 본인에게 있습니다.**</ins>  
+Auto Trader는 작은 수익을 가져다줄 수 있지만, 큰 손실을 가져다줄 수도 있습니다.  
+Auto Trader는 수익을 보장하는 프로그램이 아닙니다.  
+
+---
+
+## Copyleft / End User License
 <details>
 <summary>
-Click here to see information about 'Coin Auto Trader'!
+내용 보기
 </summary>
-<div>
-
-### Warning!  
-This program does not guarantee you to earn money.  
-You can lose all of your money by various reasons, including program errors.  
-Responsibility of investment is all up to you, and  
-responsibility of using this program is all up to you. too.  
-This program is made based on Larry Williams' volatility breakthrough strategy.  
-I highly recommend you to change this program code by your own trading algorithms and use it.  
-This program is made to use 'Upbit' api.
-If you want to use, then I recommend ver 1.6.4.
-
-### Ubuntu 서버 명령어
-
-#### <백그라운드 실행>
-
-ver 1.6.4 >>
-```shell
-$ nohup python3 cat_v.1.6.4.py > output.log &
-```
- 
-#### <실행되고 있는지 확인> 
-
-```shell
-$ ps ax | grep .py
-```
-
-#### <프로세스 종료>(PID는 ps ax | grep .py를 했을때 확인 가능)
-
-```shell
-$ kill -9 PID
-```
-
-#### <서버 업그레이드>
-
-리스트 업데이트 >>
-```shell
-$ apt-get update 
-```
-
-업그레이드 >>
-```shell
-$ sudo apt-get upgrade
-```
-</div>
-</details>
-
-# StockAutoTrader
-'Stock Auto Trader' by Youngseo Yoo (github.com/7dudtj)  
-   
-<details>
-<summary>
-Click here to see information about 'Stock Auto Trader'!
-</summary>
-<div>
-
-### Warning!  
-This program does not guarantee you to earn money.  
-You can lose all of your money by various reasons, including program errors.  
-Responsibility of investment is all up to you, and  
-responsibility of using this program is all up to you. too.  
-This program is made based on Larry Williams' volatility breakthrough strategy.  
-I highly recommend you to change this program code by your own trading algorithms and use it.  
-This program is made to use 'CREON' api.  
-This program is not developed yet. I do not recommend using this program right now.
-</div>
-</details>
-
-# License
-
+<div markdown="1">
 <img align="right" src="http://opensource.org/trademarks/opensource/OSI-Approved-License-100x137.png">
 
 The class is licensed under the [MIT License](http://opensource.org/licenses/MIT):
@@ -93,3 +62,5 @@ Permission is hereby granted, free of charge, to any person obtaining a copy of 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+  </div>
+  </details>
